@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import CampoTexto from '../../componentes/campoTexto';
-import Botao from '../../componentes/botao';
+import CampoTexto from '../../../componentes/campoTexto';
+import Botao from '../../../componentes/botao';
 
 
 function CriarProdutos(props) {

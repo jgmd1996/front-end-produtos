@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import CampoTexto from '../../componentes/campoTexto';
-import Botao from '../../componentes/botao';
+import CampoTexto from '../../../componentes/campoTexto';
+import Botao from '../../../componentes/botao';
+import { Link } from 'react-router-dom'
 
 
 function CriarCategoria(props) {
 
   const [nome, setNome] = useState('');
-  //const [category, setCategory] = useState('');
 
   const salvarCategoria = async () => {
 
@@ -46,6 +46,14 @@ function CriarCategoria(props) {
       />
       
       <Botao>Criar categoria</Botao>
+
+      <table>
+      <br/><br/><br/>
+      <tr><Link to="/">home</Link><br/></tr>
+      <tr><Link to="/listaCategoria">Lista categoria</Link><br/></tr>
+      
+      
+      </table>
       
       </form>
     </div>
