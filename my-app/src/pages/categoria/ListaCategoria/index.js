@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 
 //********************************* Aparti daqui e para consumir a api e mosra ela em uma tabela  *************************************************************** */
         const [itens, setItens] = useState([])
+        console.log(itens);
         useEffect(() => {
             async function fetchMyAPI() {
               let response = await fetch(`http://localhost:3001/categories`)
@@ -31,10 +32,12 @@ import { Link } from 'react-router-dom';
         return (
             <div className="App">
                 <table style={{border: "1px solid"}}>
+                    
                     <th>nome</th>
                 {itens.map(item => {
                     
                     return <tr style={{border: "1px solid"}}>
+                        <td style={{border: "1px solid"}}>{item.id}</td>
                         <td style={{border: "1px solid"}}>{item.nome}</td>
                         
                         

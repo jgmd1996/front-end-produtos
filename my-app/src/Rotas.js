@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import CriarCategoria from './pages/categoria/CriarCategoria'
 import CriarProdutos from './pages/produto/CriarProdutos'
 import ListaCategoria from './pages/categoria/ListaCategoria'
+import UpdateCategoria from './pages/categoria/UpdateCategoria'
 import Home from './pages/home'
 const Rotas =() => {
   return (
@@ -19,6 +20,7 @@ const Rotas =() => {
         <Route path="/" element={<Home />} />
         <Route path="/criarCategoria" element={<CriarCategoria />} />
         <Route path="/listaCategoria" element={<ListaCategoria />} />
+        <Route path="/updateCategoria" element={<UpdateCategoria />} />
         <Route path="/criarProduto" element={<CriarProdutos />} />
       </Routes>
       </BrowserRouter>
