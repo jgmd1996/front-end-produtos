@@ -50,7 +50,7 @@ function CriarCategoria(props) {
       <table>
       <br/><br/><br/>
       <tr><Link to="/">home</Link><br/></tr>
-      <tr><Link to="/listaCategoria">Lista categoria</Link><br/></tr>
+      <Link to="/homeCategoria">Voltar</Link><br/>
       
       
       </table>

@@ -1,9 +1,17 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+//Produtos
 import CriarCategoria from './pages/categoria/CriarCategoria'
 import CriarProdutos from './pages/produto/CriarProdutos'
+//Categoria
+import HomeCategoria from './pages/categoria/HomeCategoria'
 import ListaCategoria from './pages/categoria/ListaCategoria'
-import UpdateCategoria from './pages/categoria/UpdateCategoria'
+import AtualizarCategoria from './pages/categoria/AtualizarCategoria'
+import DeletarCategoria from './pages/categoria/DeletarCategoria'
+//home
 import Home from './pages/home'
+
+
+
 const Rotas =() => {
   return (
     <div className='routes'>
@@ -18,9 +26,11 @@ const Rotas =() => {
       <Routes>
 
         <Route path="/" element={<Home />} />
+        <Route path="/homeCategoria" element={<HomeCategoria />} />
         <Route path="/criarCategoria" element={<CriarCategoria />} />
         <Route path="/listaCategoria" element={<ListaCategoria />} />
-        <Route path="/updateCategoria" element={<UpdateCategoria />} />
+        <Route path="/deletarCategoria" element={<DeletarCategoria />} />
+        <Route path="/atualizarcategoria" element={<AtualizarCategoria />} />
         <Route path="/criarProduto" element={<CriarProdutos />} />
       </Routes>
       </BrowserRouter>

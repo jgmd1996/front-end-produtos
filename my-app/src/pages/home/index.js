@@ -7,9 +7,8 @@ function Home() {
       <form>
       <table>
       <br/><br/><br/>
-      <tr><Link to="/">home</Link><br/></tr>
-      <tr><Link to="/criarCategoria">Criar nova categoria</Link><br/></tr>
-      <tr><Link to="/listaCategoria">Lista categoria</Link><br/></tr>
+      <tr><Link to="/">Pagina Inicial</Link><br/></tr>
+      <tr><Link to="/homeCategoria">Opções para categoria</Link><br/></tr>
       <tr><Link to="/criarProduto">Criar novo produto</Link><br/></tr>
       
       </table>
