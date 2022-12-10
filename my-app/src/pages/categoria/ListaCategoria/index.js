@@ -24,8 +24,6 @@ function ListaCategoria() {
 
         }
 
-
-
         fetchMyAPI()
     }, [])// aqui fica as dependencias []
     //toda vez que o valor da dependia mudar o useEffect sera executado novamente.
@@ -36,9 +34,9 @@ function ListaCategoria() {
     return (
         <div className="App">
             <table style={{ border: "1px solid" }}>
-                <th>id</th>
-                <th>nome</th>
-                
+                <tr><td>id</td>
+                <td>nome</td>
+                </tr>
                 {itens.map(item => {
                     
                     return <tr style={{ border: "1px solid" }}>
@@ -49,8 +47,8 @@ function ListaCategoria() {
 
                 })}
             </table>
-            <Link to="/homeCategoria">Voltar</Link><br/>
-            <Link to="/">home</Link><br />
+            <Link to="/homeCategoria">Voltar</Link>
+            <Link to="/">home</Link>
 
         </div>
 
