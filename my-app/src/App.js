@@ -1,11 +1,6 @@
-// import CriarCategoria from './pages/CriarCategoria';
-// //import CriarProdutos from './pages/CriarProdutos';
-// //import CriarCategoria from './pages/CriarProdutos';
-
+// import { BrowserRouter as router, swith, Route, Link } from "react-router-dom";
 // function App() {
 // return(
-//       <CriarCategoria/>
-//      //<CriarProdutos/>
 // )
 // }
 

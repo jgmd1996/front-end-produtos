@@ -1,7 +1,6 @@
 import { useState,useEffect } from 'react';
 import CampoTexto from '../../../componentes/campoTexto';
-import Botao from '../../../componentes/botao';
-import { Link} from 'react-router-dom';
+import { Link, Route} from 'react-router-dom';
 import {redirect} from 'react-router-dom';
 
 function AtualizarCategoria(props) {
@@ -11,12 +10,13 @@ function AtualizarCategoria(props) {
 
   useEffect(() => {
     if (savedUser!=='') {
-      redirect('/listaCategoria');
+      redirect(<Route path="/listaCategoria" />);
     }
-
+    console.log('saved user',savedUser)
   }, [savedUser]);
 
-  console.log(savedUser)
+  //console.log('saved user',savedUser)
+  //console.log('nome',nome)
 
   // useEffect(() => {
   //     navigate('/listaCategoria');
@@ -47,7 +47,7 @@ function AtualizarCategoria(props) {
   return (
     
     <div className="CriarCategoria">
-      <form onSubmit={salvarCategoria}>
+      <form >
       
       <CampoTexto
             obrigatorio={true}
@@ -57,7 +57,7 @@ function AtualizarCategoria(props) {
             aoAlterado={valor => setNome(valor)}
       />
       
-      <Botao>Criar categoria</Botao>
+      <button onClick={salvarCategoria}>add</button>
 
       
       

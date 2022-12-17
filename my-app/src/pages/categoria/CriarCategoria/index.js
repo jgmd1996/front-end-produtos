@@ -1,26 +1,15 @@
 import { useState,useEffect } from 'react';
 import CampoTexto from '../../../componentes/campoTexto';
-import Botao from '../../../componentes/botao';
-import { Link} from 'react-router-dom';
-import {redirect} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
-function CriarCategoria(props) {
+function CriarCategoria({NomeProps}) {
 
-  const [nome, setNome] = useState('');// usestate controla o valor do estado do componente
+  const [nome, setNome] = useState(null);// usestate controla o valor do estado do componente
   const [ savedUser, setSavedUser ] = useState('');
+  
 
-  useEffect(() => {
-    if (savedUser!=='') {
-      redirect('/listaCategoria');
-    }
 
-  }, [savedUser]);
-
-  console.log(savedUser)
-
-  // useEffect(() => {
-  //     navigate('/listaCategoria');
-  // }, []);
+  const navigate = useNavigate();
 
   const salvarCategoria = async () => {
     const body = {nome: nome}
@@ -37,38 +26,47 @@ function CriarCategoria(props) {
           const data = await fetchResponse.json();
           setSavedUser(data);
           
+          
       } catch (e) {
           console.error(e);
       }    
   }
 
-  console.log(nome);
+  useEffect(() => {
+    
+    if (savedUser!=='') {
+      setSavedUser('data');
+      navigate('/listaCategoria');
+    }else{
+      console.log("Não redireciono");
+    }
+
+  }, [savedUser]);
+
+  console.log("nome categoria",nome);
+  console.log("Redirecionamento",savedUser);
   
   return (
     
+    
     <div className="CriarCategoria">
-      <form onSubmit={salvarCategoria}>
-      
+      <form>
+      <table  border="100">    
+      {NomeProps.nome}
       <CampoTexto
             obrigatorio={true}
             label="Nome" 
             placeholder="Digite a categoria."
-            valor={nome}
             aoAlterado={valor => setNome(valor)}
       />
-      
-      <Botao>Criar categoria</Botao>
-
-      
-      
-      <Link to="/">home</Link>
-      <Link to="/homeCategoria">Voltar</Link>
-      <Link to="/listaCategoria">Lista categoria</Link>
-      
-      
-      
-      
+      <button onClick={salvarCategoria}>Criar categoria</button>
+    
+      <tr></tr>
+      <tr><Link to="/">home</Link></tr>
+      </table> 
+     
       </form>
+      
     </div>
   );
 }
