@@ -3,11 +3,6 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-
-
-
-
-
 // aqui e o componente 
 function DeletarCategoria() {
 
@@ -23,8 +18,6 @@ function DeletarCategoria() {
             setItens(usuariosDaAPI)
 
         }
-
-
 
         fetchMyAPI()
     }, [])// aqui fica as dependencias []
@@ -43,6 +36,11 @@ function DeletarCategoria() {
             console.warn(result)
         };
 
+
+
+
+
+        
     return (
         <div className="App">
             <table style={{ border: "1px solid" }}>

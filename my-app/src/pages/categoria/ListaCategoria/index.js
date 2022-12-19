@@ -23,24 +23,41 @@ function ListaCategoria() {
         fetchMyAPI()
     }, [])// aqui fica as dependencias []
     //toda vez que o valor da dependia mudar o useEffect sera executado novamente.
+
+    async function deletarCategoria (id) {
+        let result = await fetch("http://localhost:3001/categories/" + id, { 
+            method: 'DELETE',
+            headers: { 
+                'Authorization': 'Bearer my-token',
+                'My-Custom-Header': 'foobar'
+            }
+        });
+        result = await result.json();
+        console.warn(result)
+    };
     return (
         <div className="App">
             <table style={{ border: "1px solid" }}>
             
-                <tr><td>id</td>
-                <td>nome</td>
+                <tr>
+                <td>Nome</td>
+                <td>Id</td> 
+                <td>Atualizar</td>
+                <td>Deletar</td>
                 </tr>
                 {itens.map(item => {
                     
                     return <tr style={{ border: "1px solid" }}>
-                        <td style={{ border: "1px solid" }}>{item._id}</td>
                         <td style={{ border: "1px solid" }}>{item.nome}</td>
+                        <td style={{ border: "1px solid" }}>{item._id}</td>
+                        <td ><button>Atualizar</button></td>
+                        <td style={{ border: "1px solid" }}><button onClick={() => deletarCategoria(item._id)}>Deletar</button> </td>
 
                     </tr>
 
                 })}
             </table>
-            <Link to="/homeCategoria">Voltar</Link>
+            
             <Link to="/">home</Link>
 
         </div>

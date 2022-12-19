@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import CampoTexto from '../../../componentes/campoTexto';
 import { Link, useNavigate} from 'react-router-dom';
 
-function CriarCategoria({NomeProps}) {
+function CriarCategoria() {
 
   const [nome, setNome] = useState(null);// usestate controla o valor do estado do componente
   const [ savedUser, setSavedUser ] = useState('');
@@ -51,8 +51,7 @@ function CriarCategoria({NomeProps}) {
     
     <div className="CriarCategoria">
       <form>
-      <table  border="100">    
-      {NomeProps.nome}
+      <table  border="100">
       <CampoTexto
             obrigatorio={true}
             label="Nome" 
