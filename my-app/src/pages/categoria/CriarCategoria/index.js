@@ -4,8 +4,8 @@ import { Link, useNavigate} from 'react-router-dom';
 
 function CriarCategoria() {
 
-  const [nome, setNome] = useState(null);// usestate controla o valor do estado do componente
-  const [ savedUser, setSavedUser ] = useState('');
+  const [nome, setNome] = useState('');// usestate controla o valor do estado do componente
+  const [ savedUser, setSavedUser ] = useState(null);
   
 
 
@@ -34,16 +34,17 @@ function CriarCategoria() {
 
   useEffect(() => {
     
-    if (savedUser!=='') {
-      setSavedUser('data');
+    if (savedUser) {
+      setSavedUser(null);
       navigate('/listaCategoria');
+      console.log("Chego aqui");
     }else{
       console.log("Não redireciono");
     }
 
   }, [savedUser]);
 
-  console.log("nome categoria",nome);
+  
   console.log("Redirecionamento",savedUser);
   
   return (
@@ -51,18 +52,29 @@ function CriarCategoria() {
     
     <div className="CriarCategoria">
       <form>
-      <table  border="100">
+      
       <CampoTexto
             obrigatorio={true}
             label="Nome" 
             placeholder="Digite a categoria."
             aoAlterado={valor => setNome(valor)}
       />
+
+        {/* <div>
+                    <input 
+                    type="text" 
+                    id="name"
+                    name="name"
+                    placeholder="Digite a categoria."
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    />
+        </div> */}
+
       <button onClick={salvarCategoria}>Criar categoria</button>
     
       <tr></tr>
       <tr><Link to="/">home</Link></tr>
-      </table> 
      
       </form>
       

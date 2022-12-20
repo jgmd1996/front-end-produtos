@@ -1,15 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import CriarCategoria from '../CriarCategoria';
-
 
 // aqui e o componente 
 function ListaCategoria() {
 
     //********************************* Aparti daqui e para consumir a api e mosra ela em uma tabela  *************************************************************** */
     const [itens, setItens] = useState([])
-    
+    const [nome, setNome] = useState([])
+
     console.log(itens);
 
     useEffect(() => {
@@ -24,10 +23,10 @@ function ListaCategoria() {
     }, [])// aqui fica as dependencias []
     //toda vez que o valor da dependia mudar o useEffect sera executado novamente.
 
-    async function deletarCategoria (id) {
-        let result = await fetch("http://localhost:3001/categories/" + id, { 
+    async function deletarCategoria(id) {
+        let result = await fetch("http://localhost:3001/categories/" + id, {
             method: 'DELETE',
-            headers: { 
+            headers: {
                 'Authorization': 'Bearer my-token',
                 'My-Custom-Header': 'foobar'
             }
@@ -36,17 +35,17 @@ function ListaCategoria() {
         console.warn(result)
     };
     return (
-        <div className="App">
+        <div>
             <table style={{ border: "1px solid" }}>
-            
+
                 <tr>
-                <td>Nome</td>
-                <td>Id</td> 
-                <td>Atualizar</td>
-                <td>Deletar</td>
+                    <td>Nome</td>
+                    <td>Id</td>
+                    <td>Atualizar</td>
+                    <td>Deletar</td>
                 </tr>
                 {itens.map(item => {
-                    
+
                     return <tr style={{ border: "1px solid" }}>
                         <td style={{ border: "1px solid" }}>{item.nome}</td>
                         <td style={{ border: "1px solid" }}>{item._id}</td>
@@ -55,10 +54,59 @@ function ListaCategoria() {
 
                     </tr>
 
+
+
+
                 })}
             </table>
-            
             <Link to="/">home</Link>
+
+
+
+
+            {/* semaprar aqui */}
+
+
+            <div>
+
+                {itens.map(item => {
+
+                    return <tr style={{ border: "1px solid" }}>
+                        <td style={{ border: "1px solid" }}>
+
+                            <div>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder={item.nome}
+                                    onChange={(e) => setNome(e.target.value)}
+                                />
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                })}
+                <h1>Meu cadastro</h1>
+                <form >
+                    <label htmlFor="name"></label>
+                    <div>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder={itens.nome}
+                            value={itens.nome}
+                            onChange={(e) => setNome(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <button >atualizar</button>
+                    </div>
+                </form>
+            </div>
 
         </div>
 
