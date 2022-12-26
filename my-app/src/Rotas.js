@@ -8,6 +8,7 @@ import AtualizarCategoria from './pages/categoria/AtualizarCategoria'
 //import DeletarCategoria from './pages/categoria/DeletarCategoria'
 //home
 import Home from './pages/Home'
+import Texte from './pages/Texte'
 
 
 
@@ -28,6 +29,8 @@ const Rotas =() => {
         <Route path="/criarCategoria" element={<CriarCategoria />} />
         <Route path="/listaCategoria" element={<ListaCategoria />} />
         <Route path="/atualizarcategoria" element={<AtualizarCategoria />} />
+        <Route path="/Texte" element={<Texte />} />
+        
         
       </Routes>
       </BrowserRouter>
