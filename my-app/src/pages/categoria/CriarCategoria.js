@@ -1,14 +1,35 @@
 import { useState, useEffect } from 'react';
 import CampoTexto from '../../componentes/CampoTexto';
 import { Link, useNavigate } from 'react-router-dom';
+import { Form, FormikProvider, useFormik, Formik } from 'formik';//
+import * as Yup from "yup";
 
 function CriarCategoria() {
+  const [loading, setLoading] = useState(false);
+  
 
-  const [nome, setNome] = useState('');// usestate controla o valor do estado do componente
-  const [savedUser, setSavedUser] = useState(null);
+  const RegisterSchema = Yup.object().shape({
+    nome: Yup.string()
+      .min(2, 'Muito curto!')
+      .max(200, 'Muito grande!')
+      .required('Categoria obrigatório!'),
+  })
 
-  const navigate = useNavigate();
+  const formik = useFormik({//
+    initialValues: {
+      nome: ''
+    },
+    validationSchema: RegisterSchema,
+    onSubmit: (values, actions) => {
+      setLoading(true);
+      setLoading(false);
+    }
+  });
 
+  console.log("formik",formik.values);
+
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
+  
   const salvarCategoria = async (event) => {
     event.preventDefault();
     const body = { nome: nome }
@@ -32,42 +53,28 @@ function CriarCategoria() {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  useEffect(() => {
-
-    console.log("Entrando direto aqui?");
-    console.log("savedUser", savedUser);
-
-    if (savedUser) {
-      setSavedUser(null);
-      navigate('/listaCategoria',{replace:true});
-      console.log("Chego aqui");
-    } else {
-      console.log("Não redireciono");
-    }
-
-  }, [savedUser]);
-
-
-
+  };
 
   return (
-
-    <div className="CriarCategoria">
-
-      <form>
-        <CampoTexto
-          obrigatorio={true}
-          label="Nome"
-          placeholder="Digite a categoria."
-          aoAlterado={valor => setNome(valor)}
-        />
-        <button onClick={salvarCategoria}>Criar categoria</button>
-        <Link to="/">home</Link>
-      </form>
+    <>
+    <FormikProvider value={formik}>
+      <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
       
-    </div>
+                 <div>
+                    <input 
+                    type="text" 
+                    id="nome"
+                    name="nome"
+                    placeholder="Digite seu nome"
+                    {...getFieldProps('nome')}
+                    />
+                    <div>{touched.nome && errors.nome}</div>
+                </div>
+             <button type='submit'  >Criar categoria</button>
+            <Link to="/">home</Link>
+      </Form>
+    </FormikProvider> 
+    </>
   );
 }
 

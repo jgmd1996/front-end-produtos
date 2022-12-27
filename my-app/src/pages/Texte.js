@@ -1,54 +1,72 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useState, useEffect } from 'react';
+import CampoTexto from '../../componentes/CampoTexto';
+import { Link, useNavigate } from 'react-router-dom';
 
-const schema = Yup.object().shape({
-  primeiroNome: Yup
-  .string()
-  .min(2, 'Muito curto!')
-  .max(200, 'Muito grande!')
-  .required('Nome obrigatório!'),
+function CriarCategoria() {
 
-  idade: Yup
-  .number()
-  .min(2, 'Muito curto!')
-  .max(200, 'Muito grande!')
-  .required('Idade obrigatório!'),
-})
+  const [nome, setNome] = useState('');// usestate controla o valor do estado do componente
+  const [savedUser, setSavedUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  const salvarCategoria = async (event) => {
+    event.preventDefault();
+    const body = { nome: nome }
+    console.log("Esse aqui e o nome", nome);
+
+    const settings = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(body)
+    };
+    try {
+      const fetchResponse = await fetch('http://localhost:3001/categories', settings);  
+      console.log("fetchResponse",fetchResponse);
+      if (fetchResponse.status === 201) {
+        const data = await fetchResponse.json();
+        setSavedUser(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    console.log("savedUser", savedUser);
+
+    if (savedUser) {
+      setSavedUser(null);
+      navigate('/listaCategoria',{replace:true});
+      console.log("Chego aqui");
+    } else {
+      console.log("Não redireciono");
+    }
+
+  }, [savedUser]);
 
 
-function Texte() {
+
 
   return (
-    <div>
-      <h1>ola</h1>
-      <Formik
-      validationSchema={schema}
-       initialValues={{
-        primeiroNome: '',
-        idade: ''
-      }}>
-        {({errors}) => (
-          <form>
-            <div>
-              <label htmlFor="primeiroNome">primeiro nome</label>
-              <Field id="primeiroNome" name="primeiroNome" type="text"/>
-              {errors.primeiroNome && (
-                <div>{errors.primeiroNome}</div>
-              )}
-            </div>
-            <div>
-              <label htmlFor="idade">idade</label>
-              <Field id="idade" name="idade" type="number"/>
-              {errors.idade && (
-                <div>{errors.idade}</div>
-              )}
-            </div>
-          </form>
-        )}
-      </Formik>
+
+    <div className="CriarCategoria">
+
+      <form>
+        <CampoTexto
+          obrigatorio={true}
+          label="Nome"
+          placeholder="Digite a categoria."
+          aoAlterado={valor => setNome(valor)}
+        />
+        <button onClick={salvarCategoria}>Criar categoria</button>
+        <Link to="/">home</Link>
+      </form>
+      
     </div>
   );
 }
 
-export default Texte;
+export default CriarCategoria;
