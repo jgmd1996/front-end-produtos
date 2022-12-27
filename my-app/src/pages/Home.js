@@ -26,7 +26,7 @@ function Home() {
       <tr>
       <td><Link to="/listaCategoria">Lista categoria</Link></td>
       <td><Link to="">Em andamento</Link></td>
-      <td><Link to="/texte">Teste</Link></td>
+      
       </tr>
       
       </table>

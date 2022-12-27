@@ -1,22 +1,27 @@
-import { useState,useEffect } from 'react';
-import CampoTexto from '../../componentes/CampoTexto';
-import { Link} from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Form, FormikProvider, useFormik } from 'formik';
+import * as Yup from "yup";
 
 function AtualizarCategoria() {
-  const {state} = useLocation();//
-
-  const [nome, setNome] = useState(state.item.nome);
-  const [savedUser, setSavedUser] = useState(null);
-
   const navigate = useNavigate();
+  const {state} = useLocation();
+///////////////////////////////////////////////////////////////////
+const RegisterSchema = Yup.object().shape({
+  nome: Yup.string()
+    .min(2, 'Muito curto!')
+    .max(200, 'Muito grande!')
+    .required('Categoria obrigatório!')
+})
 
-  const atualizaCategoria = async (event) => {
-    event.preventDefault();
-    const body = { nome: nome }
-    console.log("Esse aqui e o nome", nome);
+const formik = useFormik({//
+  initialValues: {
+    nome: state.item.nome
+  },
+  validationSchema: RegisterSchema,
 
+  onSubmit: async (values) => {
+    const body = { nome: values.nome }
     const settings = {
       method: 'put',
       headers: {
@@ -29,57 +34,42 @@ function AtualizarCategoria() {
       const fetchResponse = await fetch('http://localhost:3001/categories/' + state.item._id, settings);  
       console.log("fetchResponse",fetchResponse);
       if (fetchResponse.status === 200) {
-        const data = await fetchResponse.json();
-        setSavedUser(data);
+        formik.setFieldValue("nome", null);
+        navigate('/listaCategoria', { replace: true });
+        console.log("Chego aqui");
       }
     } catch (e) {
       console.error(e);
     }
   }
+});
 
+console.log("formik", formik.values);
+const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-  useEffect(() => {
+////////////////////////////////////////////////////////////////////
+  
 
-    console.log("Entrando direto aqui?");
-    console.log("savedUser", savedUser);
-
-    if (savedUser) {
-      setSavedUser(null);
-      navigate('/listaCategoria',{replace:true});
-      console.log("Chego aqui na hora de redirecionar");
-    } else {
-      console.log("Não redireciono");
-    }
-
-  }, [savedUser]);
-
- 
   return (
-    
-    // <div className="CriarCategoria">
-   
-    //   <h1>{state.item.nome}</h1>
-    //   <Link to="/">home</Link>
-    // </div>
+    <>
+      <FormikProvider value={formik}>
+        <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
 
-    <div className="CriarCategoria">
-
-      <form>
-      <h1>{state.item._id}</h1>
-      <h1>{state.item.nome}</h1>
-        <CampoTexto
-          obrigatorio={true}
-          label="Nome"
-          placeholder="Digite a categoria."
-          aoAlterado={valor => setNome(valor)}
-        />
-        <button onClick={atualizaCategoria}>Atualizar categoria</button>
-        <Link to="/">home</Link>
-      </form>
-      
-    </div>
-
-    
+          <div>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Digite a categoria"
+              {...getFieldProps('nome')}
+            />
+            <div>{touched.nome && errors.nome}</div>
+          </div>
+          <button type='submit'  >Criar categoria</button>
+          <Link to="/">home</Link>
+        </Form>
+      </FormikProvider>
+    </>
   );
 }
 
