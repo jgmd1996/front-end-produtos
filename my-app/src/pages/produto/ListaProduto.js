@@ -24,7 +24,7 @@ function ListaProduto() {
     }, [])
 
     async function deletarCategoria(id) {
-        let result = await fetch("http://localhost:3001/categories/" + id, {
+        let result = await fetch("http://localhost:3001/produtos/" + id, {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer my-token',
