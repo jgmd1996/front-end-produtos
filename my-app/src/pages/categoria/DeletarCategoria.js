@@ -114,7 +114,6 @@
 //   }
 
 
-
 //   function updateUser()
 //   {
 //     let item={name,mobile,email}
@@ -133,10 +132,6 @@
 //       })
 //     })
 //   }
-
-
-
-
 
 //   return (
 //     <div className="App">

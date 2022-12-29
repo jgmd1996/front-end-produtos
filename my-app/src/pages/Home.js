@@ -2,11 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Home() {
 
-  function redirecionar (){
-    return(
-      <Link to="/homeCategoria"></Link>
-    )
-  }
+  
   
   return (
     <div>
