@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-
 function ListaProduto() {
 
     const [itens, setItens] = useState([])
@@ -11,7 +10,7 @@ function ListaProduto() {
     const navigate = useNavigate();//
 
     const redirect = (item) => {
-        navigate('/atualizarcategoria', { replace: false, state: { item: item } });//
+        navigate('/AtualizarProduto', { replace: false, state: { item: item } });//
     }
 
     useEffect(() => {

@@ -58,8 +58,8 @@ function CriarProduto() {
         console.log("fetchResponse", fetchResponse);
         if (fetchResponse.status === 201) {
           formik.setFieldValue("nome", null);
-          //navigate('/listaCategoria', { replace: true });
-          //console.log("Chego aqui");
+          navigate('/ListaProduto', { replace: true });
+          console.log("Chego aqui");
         }
       } catch (e) {
         console.error(e);

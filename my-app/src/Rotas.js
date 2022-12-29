@@ -6,6 +6,7 @@ import ListaCategoria from './pages/categoria/ListaCategoria'
 //import DeletarCategoria from './pages/categoria/DeletarCategoria'
 //home
 import Home from './pages/Home'
+import AtualizarProduto from './pages/produto/AtualizarProduto'
 import CriarProduto from './pages/produto/CriarProduto'
 import ListaProduto from './pages/produto/ListaProduto'
 
@@ -18,6 +19,8 @@ const Rotas =() => {
         <Route path="/criarCategoria" element={<CriarCategoria />} />
         <Route path="/listaCategoria" element={<ListaCategoria />} />
         <Route path="/ListaProduto" element={<ListaProduto />} />
+        <Route path="/AtualizarProduto" element={<AtualizarProduto />} />
+        
 
         <Route path="/CriarProduto" element={<CriarProduto />} />
   
