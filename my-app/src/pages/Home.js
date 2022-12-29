@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ListaProduto from './produto/ListaProduto';
 
 function Home() {
 
@@ -21,7 +22,7 @@ function Home() {
 
       <tr>
       <td><Link to="/listaCategoria">Lista categoria</Link></td>
-      <td><Link to="">Em andamento</Link></td>
+      <td><Link to="/ListaProduto">Lista produto</Link></td>
       
       </tr>
       
