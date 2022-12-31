@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import AtualizarCategoria from './pages/categoria/AtualizarCategoria'
 //Produtos
 import CriarCategoria from './pages/categoria/CriarCategoria'
 //Categoria
@@ -19,6 +20,8 @@ const Rotas =() => {
         <Route path="/criarCategoria" element={<CriarCategoria />} />
         <Route path="/listaCategoria" element={<ListaCategoria />} />
         <Route path="/ListaProduto" element={<ListaProduto />} />
+        <Route path="/AtualizarCategoria" element={<AtualizarCategoria />} />
+        
         <Route path="/AtualizarProduto" element={<AtualizarProduto />} />
         
 
