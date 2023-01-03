@@ -15,35 +15,23 @@ function ListaProduto() {
     const [categorias, setCategorias] = useState([]);
 
     const [lista, setLista] = useState({});
-    console.log("categoria nome",categorias.nome);
-    
-    ////////////////////////////////////////////////////////////////////
-    const options = [
-        { value: "produto 01", label: "Produto 01" },
-        { value: "produto 02", label: "Produto 02" },
-        { value: "produto 03", label: "Produto 03" },
-        { value: "produto 04", label: "Produto 04" },
-        { value: "produto 05", label: "Produto 05" },
-        { value: "produto 06", label: "Produto 06" },
-        { value: "produto 07", label: "Produto 07" },
-        { value: "produto 08", label: "Produto 08" },
-    ];
+    console.log("categoria nome", categorias.nome);
 
-   
 
     useEffect(() => {
         async function fetchMyAPI() {
             let response = await fetch("http://localhost:3001/categories");
             const categoriasApi = await response.json();
-            const categoriasSelect = categoriasApi.map(categoriaApi => ({value: categoriaApi._id, label: categoriaApi.nome}) )
+            const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }))
             setCategorias(categoriasSelect);
-           
+
         }
 
         fetchMyAPI();
-    }, [])// aqui fica as dependencias []
+    }, [])
 
     const [selectedOptions, setSelectedOptions] = useState([]);
+    console.log("selectedOptions",selectedOptions);
 
     const handleSelect = () => {
         console.log(selectedOptions);
@@ -107,33 +95,28 @@ function ListaProduto() {
                         </tr>
 
                     })}
-                        <>                    
- 
-            <Select
-       
-        components={animatedComponents}
-        isMulti
-        options={categorias}
-        onChange={(item) => setSelectedOptions(item)}
-        className="select"
-        isClearable={true}
-        isSearchable={true}
-        isDisabled={false}
-        isLoading={false}
-        isRtl={false}
-        closeMenuOnSelect={false}
-      />
-                        
-                        </>
+                    <>
+
+                        <Select
+
+                            components={animatedComponents}
+                            isMulti
+                            options={categorias}
+                            onChange={(item) => setSelectedOptions(item)}
+                            className="select"
+                            isClearable={true}
+                            isSearchable={true}
+                            isDisabled={false}
+                            isLoading={false}
+                            isRtl={false}
+                            closeMenuOnSelect={false}
+                        />
+
+                    </>
                 </tbody>
             </table>
             <Link to="/">home</Link>
         </div>
-
-
-
-
-
 
 
     );

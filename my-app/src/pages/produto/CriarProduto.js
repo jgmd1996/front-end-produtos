@@ -2,7 +2,42 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from "yup";
 
+import React from 'react';
+import { useEffect, useState } from 'react'
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import "./style.css";
+
+
 function CriarProduto() {
+
+  ////////////////////////////////////////////////////////////////////////////
+  const animatedComponents = makeAnimated();
+  const [categorias, setCategorias] = useState([]);
+
+
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      let response = await fetch("http://localhost:3001/categories");
+      const categoriasApi = await response.json();
+      const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }))
+      setCategorias(categoriasSelect);
+
+    }
+
+    fetchMyAPI();
+  }, [])
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+		console.log("selectedOptions",selectedOptions);
+    formik.setFieldValue("category", selectedOptions);
+	}, [selectedOptions])
+
+
+  //////////////////////////////////////////////////////////////////////////////
 
   const navigate = useNavigate();
 
@@ -12,39 +47,40 @@ function CriarProduto() {
       .max(200, 'Muito grande!')
       .required('Nome obrigatório!'),
 
-      description: Yup.string()
+    description: Yup.string()
       .min(2, 'Muito curto!')
       .max(200, 'Muito grande!')
       .required('Descrição obrigatório!'),
 
-      price: Yup.number()
+    price: Yup.number()
       .min(1, 'Muito curto!')
       .max(900, 'Muito grande!')
       .required('Preço obrigatório!'),
 
-      quantidade: Yup.number()
+    quantidade: Yup.number()
       .min(1, 'Muito curto!')
       .max(200, 'Muito grande!')
-      .required('Quantidade obrigatório!') 
+      .required('Quantidade obrigatório!')
   })
 
   const formik = useFormik({//
     initialValues: {
       nome: '',
-      description:'',
+      description: '',
       price: '',
-      quantidade:'',
-      category:''
+      quantidade: '',
+      category: ''
     },
     validationSchema: RegisterSchema,
 
     onSubmit: async (values) => {
-      const body = { 
+      const body = {
         nome: values.nome,
         description: values.description,
         price: values.price,
-        quantidade: values.quantidade
-    }
+        quantidade: values.quantidade,
+        category: values.category
+      }
       const settings = {
         method: 'POST',
         headers: {
@@ -52,6 +88,7 @@ function CriarProduto() {
           'Accept': 'application/json',
         },
         body: JSON.stringify(body)
+        
       };
       try {
         const fetchResponse = await fetch('http://localhost:3001/produtos', settings);
@@ -74,7 +111,7 @@ function CriarProduto() {
     <>
       <FormikProvider value={formik}>
         <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
-            <h1>Criar produto</h1>
+          <h1>Criar produto</h1>
           <div>
             <input
               type="text"
@@ -119,7 +156,27 @@ function CriarProduto() {
             <div>{touched.quantidade && errors.quantidade}</div>
           </div>
 
-         
+          <>
+
+            <Select
+
+              components={animatedComponents}
+              isMulti
+              options={categorias}
+              onChange={(item) => setSelectedOptions(item)}
+              className="select"
+              isClearable={true}
+              isSearchable={true}
+              isDisabled={false}
+              isLoading={false}
+              isRtl={false}
+              closeMenuOnSelect={false}
+
+            />
+
+          </>
+
+
 
           <button type='submit'  >Criar produtos</button>
           <Link to="/">home</Link>
