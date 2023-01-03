@@ -1,43 +1,31 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from "yup";
-
 import React from 'react';
 import { useEffect, useState } from 'react'
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import "./style.css";
 
-
 function CriarProduto() {
 
-  ////////////////////////////////////////////////////////////////////////////
   const animatedComponents = makeAnimated();
+  
   const [categorias, setCategorias] = useState([]);
-
-
+  
+  const [selectedOptions, setSelectedOptions] = useState({});
+  console.log("selectedOptions",selectedOptions );
 
   useEffect(() => {
     async function fetchMyAPI() {
       let response = await fetch("http://localhost:3001/categories");
       const categoriasApi = await response.json();
-      const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }))
+      const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }));
       setCategorias(categoriasSelect);
-
     }
 
     fetchMyAPI();
-  }, [])
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  useEffect(() => {
-		console.log("selectedOptions",selectedOptions);
-    formik.setFieldValue("category", selectedOptions);
-	}, [selectedOptions])
-
-
-  //////////////////////////////////////////////////////////////////////////////
+  }, []);
 
   const navigate = useNavigate();
 
@@ -60,10 +48,11 @@ function CriarProduto() {
     quantidade: Yup.number()
       .min(1, 'Muito curto!')
       .max(200, 'Muito grande!')
-      .required('Quantidade obrigatório!')
-  })
+      .required('Quantidade obrigatório!'),
 
-  const formik = useFormik({//
+  });
+
+  const formik = useFormik({
     initialValues: {
       nome: '',
       description: '',
@@ -71,6 +60,7 @@ function CriarProduto() {
       quantidade: '',
       category: ''
     },
+
     validationSchema: RegisterSchema,
 
     onSubmit: async (values) => {
@@ -79,7 +69,7 @@ function CriarProduto() {
         description: values.description,
         price: values.price,
         quantidade: values.quantidade,
-        category: values.category
+        category: selectedOptions.map(id=> id.value)
       }
       const settings = {
         method: 'POST',
@@ -88,7 +78,7 @@ function CriarProduto() {
           'Accept': 'application/json',
         },
         body: JSON.stringify(body)
-        
+
       };
       try {
         const fetchResponse = await fetch('http://localhost:3001/produtos', settings);
@@ -104,9 +94,8 @@ function CriarProduto() {
     }
   });
 
-  console.log("formik", formik.values);
-
   const { errors, touched, handleSubmit, getFieldProps } = formik;
+
   return (
     <>
       <FormikProvider value={formik}>
@@ -155,9 +144,7 @@ function CriarProduto() {
             />
             <div>{touched.quantidade && errors.quantidade}</div>
           </div>
-
-          <>
-
+          
             <Select
 
               components={animatedComponents}
@@ -173,11 +160,7 @@ function CriarProduto() {
               closeMenuOnSelect={false}
 
             />
-
-          </>
-
-
-
+            <div>{touched.category && errors.category}</div>
           <button type='submit'  >Criar produtos</button>
           <Link to="/">home</Link>
         </Form>
