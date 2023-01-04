@@ -1,11 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from "yup";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+
 
 function AtualizarProduto() {
   const navigate = useNavigate();
   const {state} = useLocation();
+  console.log("state categori",state.item)
+  const animatedComponents = makeAnimated();
+  const [selectedOptions, setSelectedOptions] = useState({});
+
+  const categoriasdoState = state.item.category.map(categori => ({value: categori._id, label: categori.nome}))
+  console.log("categoriasdoState",categoriasdoState);
+
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      let response = await fetch("http://localhost:3001/categories");
+      const categoriasApi = await response.json();
+      const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }));
+      setCategorias(categoriasSelect);
+    }
+
+    fetchMyAPI();
+  }, []);
+
+
+
+  console.log("id",state.category)
 ///////////////////////////////////////////////////////////////////
 const RegisterSchema = Yup.object().shape({
     nome: Yup.string()
@@ -44,7 +70,8 @@ const formik = useFormik({//
         nome: values.nome,
         description: values.description,
         price: values.price,
-        quantidade: values.quantidade
+        quantidade: values.quantidade,
+        category: selectedOptions.map(id=> id.value)
      }
     const settings = {
       method: 'put',
@@ -72,7 +99,7 @@ console.log("formik", formik.values.nome);
 const { errors, touched, handleSubmit, getFieldProps } = formik;
 
 ////////////////////////////////////////////////////////////////////
-  
+
 
   return (
     <>
@@ -80,6 +107,7 @@ const { errors, touched, handleSubmit, getFieldProps } = formik;
         <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
 
         <h1>Criar produto</h1>
+        
           <div>
             <input
               type="text"
@@ -124,8 +152,25 @@ const { errors, touched, handleSubmit, getFieldProps } = formik;
             <div>{touched.quantidade && errors.quantidade}</div>
           </div>
 
-          <button type='submit'  >Atualizar categoria</button>
+          <Select
+              defaultValue={categoriasdoState}
+              components={animatedComponents}
+              isMulti
+              options={categorias}
+              onChange={(item) => setSelectedOptions(item)}
+              className="select"
+              isClearable={true}
+              isSearchable={true}
+              isDisabled={false}
+              isLoading={false}
+              isRtl={false}
+              closeMenuOnSelect={false}
+
+            />
+
+          <button type='submit'  >Atualizar Produto</button>
           <Link to="/">home</Link>
+          
         </Form>
       </FormikProvider>
     </>

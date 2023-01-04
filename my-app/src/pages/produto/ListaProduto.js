@@ -1,45 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import "./style.css";
 
-
-
 function ListaProduto() {
-
     const [itens, setItens] = useState([]);
-    const [nome, setNome] = useState([]);
-
-    const [categorias, setCategorias] = useState([]);
-
-    const [lista, setLista] = useState({});
-    console.log("categoria nome", categorias.nome);
-
-
-    useEffect(() => {
-        async function fetchMyAPI() {
-            let response = await fetch("http://localhost:3001/categories");
-            const categoriasApi = await response.json();
-            const categoriasSelect = categoriasApi.map(categoriaApi => ({ value: categoriaApi._id, label: categoriaApi.nome }))
-            setCategorias(categoriasSelect);
-
-        }
-
-        fetchMyAPI();
-    }, [])
-
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    console.log("selectedOptions",selectedOptions);
-
-    const handleSelect = () => {
-        console.log(selectedOptions);
-    };
-
-    const animatedComponents = makeAnimated();
-    ///////////////////////////////////////////////////////
-    const navigate = useNavigate();//
+    const navigate = useNavigate();
 
     const redirect = (item) => {
         navigate('/AtualizarProduto', { replace: false, state: { item: item } });//
@@ -93,26 +59,7 @@ function ListaProduto() {
                             <td style={{ border: "1px solid" }}><button onClick={() => deletarCategoria(item._id)}>Deletar</button> </td>
 
                         </tr>
-
                     })}
-                    <>
-
-                        <Select
-
-                            components={animatedComponents}
-                            isMulti
-                            options={categorias}
-                            onChange={(item) => setSelectedOptions(item)}
-                            className="select"
-                            isClearable={true}
-                            isSearchable={true}
-                            isDisabled={false}
-                            isLoading={false}
-                            isRtl={false}
-                            closeMenuOnSelect={false}
-                        />
-
-                    </>
                 </tbody>
             </table>
             <Link to="/">home</Link>
