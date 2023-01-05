@@ -10,11 +10,9 @@ import "./style.css";
 function CriarProduto() {
 
   const animatedComponents = makeAnimated();
-  
   const [categorias, setCategorias] = useState([]);
-  
   const [selectedOptions, setSelectedOptions] = useState({});
-  console.log("selectedOptions",selectedOptions );
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -26,8 +24,6 @@ function CriarProduto() {
 
     fetchMyAPI();
   }, []);
-
-  const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
     nome: Yup.string()
@@ -48,8 +44,7 @@ function CriarProduto() {
     quantidade: Yup.number()
       .min(1, 'Muito curto!')
       .max(200, 'Muito grande!')
-      .required('Quantidade obrigatório!'),
-
+      .required('Quantidade obrigatório!')
   });
 
   const formik = useFormik({
@@ -69,8 +64,8 @@ function CriarProduto() {
         description: values.description,
         price: values.price,
         quantidade: values.quantidade,
-        category: selectedOptions.map(id=> id.value)
-      }
+        category: selectedOptions.map(id => id.value)
+      };
       const settings = {
         method: 'POST',
         headers: {
@@ -144,23 +139,23 @@ function CriarProduto() {
             />
             <div>{touched.quantidade && errors.quantidade}</div>
           </div>
-          
-            <Select
 
-              components={animatedComponents}
-              isMulti
-              options={categorias}
-              onChange={(item) => setSelectedOptions(item)}
-              className="select"
-              isClearable={true}
-              isSearchable={true}
-              isDisabled={false}
-              isLoading={false}
-              isRtl={false}
-              closeMenuOnSelect={false}
+          <Select
+            components={animatedComponents}
+            placeholder="Selecione a categoria"
+            isMulti
+            options={categorias}
+            onChange={(item) => setSelectedOptions(item)}
+            className="select"
+            isClearable={true}
+            isSearchable={true}
+            isDisabled={false}
+            isLoading={false}
+            isRtl={false}
+            closeMenuOnSelect={false}
+          />
 
-            />
-            <div>{touched.category && errors.category}</div>
+          <div>{touched.category && errors.category}</div>
           <button type='submit'  >Criar produtos</button>
           <Link to="/">home</Link>
         </Form>

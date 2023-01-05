@@ -9,13 +9,10 @@ import makeAnimated from "react-select/animated";
 function AtualizarProduto() {
   const navigate = useNavigate();
   const {state} = useLocation();
-  console.log("state categori",state.item)
   const animatedComponents = makeAnimated();
+  const categoriasdoState = state.item.category.map(categori => ({value: categori._id, label: categori.nome}));
+
   const [selectedOptions, setSelectedOptions] = useState({});
-
-  const categoriasdoState = state.item.category.map(categori => ({value: categori._id, label: categori.nome}))
-  console.log("categoriasdoState",categoriasdoState);
-
   const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
@@ -29,10 +26,6 @@ function AtualizarProduto() {
     fetchMyAPI();
   }, []);
 
-
-
-  console.log("id",state.category)
-///////////////////////////////////////////////////////////////////
 const RegisterSchema = Yup.object().shape({
     nome: Yup.string()
     .min(2, 'Muito curto!')
@@ -55,7 +48,7 @@ const RegisterSchema = Yup.object().shape({
     .required('Quantidade obrigatório!') 
 });
 
-const formik = useFormik({//
+const formik = useFormik({
   initialValues: {
     nome: state.item.nome,
     description: state.item.description,
@@ -95,11 +88,7 @@ const formik = useFormik({//
   }
 });
 
-console.log("formik", formik.values.nome);
 const { errors, touched, handleSubmit, getFieldProps } = formik;
-
-////////////////////////////////////////////////////////////////////
-
 
   return (
     <>
@@ -107,7 +96,6 @@ const { errors, touched, handleSubmit, getFieldProps } = formik;
         <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
 
         <h1>Criar produto</h1>
-        
           <div>
             <input
               type="text"
@@ -155,6 +143,7 @@ const { errors, touched, handleSubmit, getFieldProps } = formik;
           <Select
               defaultValue={categoriasdoState}
               components={animatedComponents}
+              placeholder="Selecione a categoria"
               isMulti
               options={categorias}
               onChange={(item) => setSelectedOptions(item)}
@@ -165,12 +154,10 @@ const { errors, touched, handleSubmit, getFieldProps } = formik;
               isLoading={false}
               isRtl={false}
               closeMenuOnSelect={false}
-
             />
 
           <button type='submit'  >Atualizar Produto</button>
-          <Link to="/">home</Link>
-          
+          <Link to="/">home</Link>  
         </Form>
       </FormikProvider>
     </>

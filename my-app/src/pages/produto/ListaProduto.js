@@ -6,6 +6,7 @@ import "./style.css";
 function ListaProduto() {
     const [itens, setItens] = useState([]);
     const navigate = useNavigate();
+    const [atualizarPagina, setAtualizarPagina] = useState('');
 
     const redirect = (item) => {
         navigate('/AtualizarProduto', { replace: false, state: { item: item } });//
@@ -18,7 +19,7 @@ function ListaProduto() {
             setItens(categories)
         }
         fetchMyAPI()
-    }, [])
+    }, [atualizarPagina]);
 
     async function deletarCategoria(id) {
         let result = await fetch("http://localhost:3001/produtos/" + id, {
@@ -29,7 +30,8 @@ function ListaProduto() {
             }
         });
         result = await result.json();
-        console.warn(result)
+        console.warn(result);
+        setAtualizarPagina(result);
     };
 
     return (

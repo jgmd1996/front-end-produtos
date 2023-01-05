@@ -35,16 +35,15 @@ function CriarCategoria() {
         if (fetchResponse.status === 201) {
           formik.setFieldValue("nome", null);
           navigate('/listaCategoria', { replace: true });
-          console.log("Chego aqui");
-        }
+        };
       } catch (e) {
         console.error(e);
-      }
+      };
     }
   });
 
-  console.log("formik", formik.values);
   const { errors, touched, handleSubmit, getFieldProps } = formik;
+
   return (
     <>
       <FormikProvider value={formik}>
@@ -60,7 +59,9 @@ function CriarCategoria() {
             />
             <div>{touched.nome && errors.nome}</div>
           </div>
+
           <button type='submit'  >Criar categoria</button>
+          
           <Link to="/">home</Link>
         </Form>
       </FormikProvider>

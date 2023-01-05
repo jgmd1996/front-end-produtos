@@ -1,20 +1,20 @@
-import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from "yup";
 
 function AtualizarCategoria() {
+  
   const navigate = useNavigate();
   const {state} = useLocation();
-///////////////////////////////////////////////////////////////////
-const RegisterSchema = Yup.object().shape({
-  nome: Yup.string()
-    .min(2, 'Muito curto!')
-    .max(200, 'Muito grande!')
-    .required('Categoria obrigatório!')
-})
 
-const formik = useFormik({//
+  const RegisterSchema = Yup.object().shape({
+     nome: Yup.string()
+     .min(2, 'Muito curto!')
+     .max(200, 'Muito grande!')
+     .required('Categoria obrigatório!')
+  });
+
+  const formik = useFormik({
   initialValues: {
     nome: state.item.nome
   },
@@ -42,13 +42,9 @@ const formik = useFormik({//
       console.error(e);
     }
   }
-});
+  });
 
-console.log("formik", formik.values);
-const { errors, touched, handleSubmit, getFieldProps } = formik;
-
-////////////////////////////////////////////////////////////////////
-  
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <>
